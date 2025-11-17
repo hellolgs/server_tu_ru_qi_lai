@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { CreateUseDto } from './dto/create-use.dto';
+import { CreateUseDto, UpdateUseDto } from './dto/create-use.dto';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -32,5 +32,12 @@ export class UsersController {
   @ApiOkResponse({ description: '返回查找到的用户' })
   async findOneUser(@Param('id', ParseIntPipe) id: number) {
     return await this.usersService.find(id);
+  }
+
+  @Post('/update')
+  @ApiOperation({ summary: '更新当前用户' })
+  @ApiOkResponse({ description: '返回更新状态' })
+  async updateUser(@Body() userInfo: UpdateUseDto) {
+    return await this.usersService.updateUser(userInfo);
   }
 }

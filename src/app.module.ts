@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { getDatabaseConfig } from './config/database.config';
+import { TimeModule } from './common/time/time.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { getDatabaseConfig } from './config/database.config';
       inject: [ConfigService],
     }),
     UsersModule,
+    TimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,3 +6,7 @@ export class CreateUseDto {
   lastRestoreTime: number;
   currentLevel: string;
 }
+
+export class UpdateUseDto extends CreateUseDto {
+  id: number;
+}

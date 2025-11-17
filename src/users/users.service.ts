@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUseDto } from './dto/create-use.dto';
+import { CreateUseDto, UpdateUseDto } from './dto/create-use.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -24,9 +24,19 @@ export class UsersService {
 
     return user;
   }
+  // 创建用户
   async createUser(createUserDto: CreateUseDto): Promise<User> {
     const user = this.usersRepository.create(createUserDto);
     console.log('[ user ]', user);
+    return await this.usersRepository.save(user);
+  }
+  // 更新用户信息
+  async updateUser(updateUserDto: UpdateUseDto): Promise<User> {
+    const user = await this.find(updateUserDto.id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${updateUserDto.id} not found`);
+    }
+    Object.assign(user, updateUserDto);
     return await this.usersRepository.save(user);
   }
 }
